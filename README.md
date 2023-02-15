@@ -1,2 +1,2 @@
-# ocean-fullstack-02-2023
- Fullstack project from Samsung OCEAN
+# Fullstack Ocean
+Projetinho fullstack utilizando JavaScript, Express, Node e MongoDB no back-end até o momento;
