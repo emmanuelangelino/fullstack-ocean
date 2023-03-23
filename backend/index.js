@@ -13,7 +13,6 @@ async function main() {
   const db = client.db(DB_NAME);
   const collection = db.collection("itens");
   console.log("Banco de dados conectado com sucesso!");
-
   const app = express();
 
   // O body da req está em JSON
@@ -43,7 +42,6 @@ async function main() {
   // Endpoint Read Single by ID -> [GET] /item/:id
   app.get("/item/:id", async function (req, res) {
     const id = req.params.id;
-    // const item = itens[id-1];
     const item = await collection.findOne({ _id: new ObjectId(id) });
     res.send(item);
   });
@@ -51,9 +49,7 @@ async function main() {
   // Endpoint Create -> [POST] /item
   app.post("/item", async function (req, res) {
     const item = req.body;
-    // itens.push(item.nome);
     await collection.insertOne(item);
-    // res.send("Item criado com sucesso!");
     res.send(item);
   });
 
@@ -61,16 +57,16 @@ async function main() {
   app.put("/item/:id", async function (req, res){
     const id = req.params.id;
     const body = req.body;
-    // console.log(id, body);
     await collection.updateOne({ _id: new ObjectId(id) },{ $set: body });
     res.send(body);
   });
 
   // Endpoint Delete -> [DELETE] /item/:id
-  // Exercício:
-  // - pesquisar sobre a operação de remover itens
-  // - implementar o endpoint de delete
-  // - realizar a operação de excluir item
+  app.delete("/item/:id", async function (req, res) {
+    const id = req.params.id;
+    await collection.deleteOne({ _id: new ObjectId(id) });
+    res.send("Registro removido com sucesso!");
+  });
 
   app.listen(3000);
 }
